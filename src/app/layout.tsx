@@ -4,10 +4,12 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 
-import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 import { cn } from "@/lib/utils";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+
+import "./globals.css";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -31,6 +33,7 @@ export default function RootLayout({
             defaultTheme="dark"
             enableSystem={false}
             storageKey="discord-theme">
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>
