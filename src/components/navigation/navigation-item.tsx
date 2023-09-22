@@ -41,7 +41,13 @@ function NavigationItem({ id, imageUrl, name }: NavigationItemProps) {
               params?.serverId === id &&
                 "bg-primary/10 text-primary rounded-[16px]"
             )}>
-            <Image fill objectFit="cover" src={imageUrl} alt="Channel" />
+            <Image
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              src={imageUrl}
+              alt="Channel"
+            />
           </div>
         </button>
       </ActionTooltip>
