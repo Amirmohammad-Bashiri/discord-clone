@@ -11,7 +11,11 @@ import { ourFileRouter } from "@/app/api/uploadthing/core";
 
 import "./globals.css";
 
-const font = Open_Sans({ subsets: ["latin"] });
+const font = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export const metadata: Metadata = {
   title: "Chat Application",
