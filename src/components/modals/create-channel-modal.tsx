@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
@@ -47,7 +48,8 @@ const formSchema = z.object({
 type FormFields = z.infer<typeof formSchema>;
 
 function CreateChannelModal() {
-  const { isOpen, onClose, type } = useModalStore();
+  const { isOpen, onClose, type, data } = useModalStore();
+  const { channelType } = data;
 
   const router = useRouter();
   const params = useParams();
@@ -61,6 +63,14 @@ function CreateChannelModal() {
       type: ChannelType.TEXT,
     },
   });
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue("type", channelType);
+    } else {
+      form.setValue("type", ChannelType.TEXT);
+    }
+  }, [channelType, form]);
 
   const isLoading = form.formState.isSubmitting;
 
