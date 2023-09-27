@@ -72,7 +72,7 @@ function ServerSearch({ searchData }: ServerSearchProps) {
         <p className="text-sm font-semibold transition text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300">
           Search
         </p>
-        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 py-3 font-mono text-[14px] font-medium text-muted-foreground ml-auto">
+        <kbd className="hidden pointer-events-none md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 py-3 font-mono text-[14px] font-medium text-muted-foreground ml-auto">
           <Command className="w-3 h-3" />K
         </kbd>
       </button>
