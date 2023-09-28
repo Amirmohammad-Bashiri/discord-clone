@@ -6,6 +6,7 @@ import { extractRouterConfig } from "uploadthing/server";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import { SocketProvider } from "@/components/providers/socket-provider";
 import { cn } from "@/lib/utils";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 
@@ -37,8 +38,10 @@ export default function RootLayout({
             defaultTheme="dark"
             enableSystem={false}
             storageKey="discord-theme">
-            <ModalProvider />
-            {children}
+            <SocketProvider>
+              <ModalProvider />
+              {children}
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>
