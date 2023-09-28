@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { UploadDropzone } from "@/lib/uploadthing";
+import axios from "axios";
 import { X } from "lucide-react";
+
+import { UploadDropzone } from "@/lib/uploadthing";
+
+import { type UploadFileResponse } from "uploadthing/client";
 
 type FileUploadProps = {
   endpoint: "messageFile" | "serverImage";
@@ -11,6 +16,24 @@ type FileUploadProps = {
 };
 
 function FileUpload({ endpoint, onChange, value }: FileUploadProps) {
+  const [uploadRes, setUploadRes] = useState<
+    UploadFileResponse[] | undefined
+  >();
+
+  const handleDeleteImage = async (fileKey: string) => {
+    try {
+      await axios.delete("/api/uploadthing", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: JSON.stringify({ fileKey }),
+      });
+      onChange("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const fileType = value?.split(".").pop();
 
   if (value && fileType !== "pdf") {
@@ -18,7 +41,11 @@ function FileUpload({ endpoint, onChange, value }: FileUploadProps) {
       <div className="relative w-20 h-20">
         <Image fill src={value} alt="Upload" className="rounded-full" />
         <button
-          onClick={() => onChange("")}
+          onClick={() => {
+            if (uploadRes) {
+              handleDeleteImage(uploadRes?.[0].key);
+            }
+          }}
           className="absolute top-0 right-0 p-1 text-white rounded-full shadow-sm bg-rose-500"
           type="button">
           <X className="w-4 h-4" />
@@ -28,15 +55,19 @@ function FileUpload({ endpoint, onChange, value }: FileUploadProps) {
   }
 
   return (
-    <UploadDropzone
-      endpoint={endpoint}
-      onClientUploadComplete={res => {
-        onChange(res?.[0].url);
-      }}
-      onUploadError={(error: Error) => {
-        console.log(error);
-      }}
-    />
+    <div>
+      <UploadDropzone
+        endpoint={endpoint}
+        onClientUploadComplete={res => {
+          setUploadRes(res);
+          onChange(res?.[0].url);
+        }}
+        onUploadError={(error: Error) => {
+          console.log(error);
+        }}
+        config={{ mode: "auto" }}
+      />
+    </div>
   );
 }
 
