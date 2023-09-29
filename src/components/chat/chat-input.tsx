@@ -64,6 +64,7 @@ function ChatInput({ apiUrl, query, name, type }: ChatInputProps) {
                   </button>
                   <Input
                     disabled={isLoading}
+                    autoComplete="off"
                     placeholder={`Message ${
                       type === "conversation" ? name : "#" + name
                     }`}
